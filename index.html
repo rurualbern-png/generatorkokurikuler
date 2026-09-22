@@ -25,11 +25,13 @@
     </script>
     
     <style>
+        /* Custom Scrollbar for sleek UI */
         ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
 
+        /* Form transition utilities */
         .progressive-group { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
         .is-disabled {
             opacity: 0.4;
@@ -38,6 +40,7 @@
             background-color: #f8fafc;
         }
         
+        /* OptionBox Styling */
         .option-box input:checked + div {
             border-color: #0d9488;
             background-color: #f0fdfa;
@@ -45,12 +48,21 @@
         }
         .option-box input:checked + div .check-icon { opacity: 1; transform: scale(1); }
         
+        /* Checkbox/Pill Styling */
         .pill-check input:checked + span {
             background-color: #0d9488;
             color: white;
             border-color: #0d9488;
         }
 
+        /* Typography for Output Area */
+        .output-content h2 { font-size: 1.5rem; font-weight: 700; color: #1e293b; margin-top: 1.5rem; margin-bottom: 0.75rem; border-bottom: 2px solid #e2e8f0; padding-bottom: 0.25rem; }
+        .output-content h3 { font-size: 1.25rem; font-weight: 600; color: #334155; margin-top: 1.25rem; margin-bottom: 0.5rem; }
+        .output-content p { color: #475569; line-height: 1.6; margin-bottom: 1rem; }
+        .output-content ul { list-style-type: disc; padding-left: 1.5rem; margin-bottom: 1rem; color: #475569; }
+        .output-content ol { list-style-type: decimal; padding-left: 1.5rem; margin-bottom: 1rem; color: #475569; }
+        
+        /* Custom PDF Layout Styles */
         .document-paper {
             width: 100%;
             max-width: 210mm;
@@ -122,6 +134,7 @@
         .styled-table td { padding: 12px; border: 1px solid #cbd5e1; color: #334155; line-height: 1.5; vertical-align: top; }
         .styled-table tr:nth-child(even) { background-color: #F8F9FA; }
         
+        /* Utilitas untuk Mencegah Halaman Terpotong saat PDF */
         .avoid-break { 
             page-break-inside: avoid !important; 
             break-inside: avoid !important;
@@ -130,7 +143,16 @@
             page-break-before: always !important; 
             break-before: page !important;
         }
+        tr.avoid-break {
+            page-break-inside: avoid !important; 
+            break-inside: avoid !important;
+        }
 
+        .badge-memahami { background-color: #ccfbf1; color: #115e59; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem; display: inline-block; }
+        .badge-mengaplikasi { background-color: #dbeafe; color: #1e40af; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem; display: inline-block; }
+        .badge-merefleksi { background-color: #f3e8ff; color: #6b21a8; padding: 4px 8px; border-radius: 4px; font-weight: 700; font-size: 0.75rem; display: inline-block; }
+
+        /* A4 Print Layout Configuration */
         @media print {
             @page { size: A4 portrait; margin: 0; }
             body * { visibility: hidden; }
@@ -160,17 +182,25 @@
         <!-- ==================== PANEL 1: FORMULIR INPUT DATA (45%) ==================== -->
         <section class="w-full lg:w-[45%] h-full flex flex-col bg-white border-r border-slate-200 shadow-[2px_0_10px_rgba(0,0,0,0.02)] z-10">
             
+            <!-- Header Panel 1 -->
             <div class="px-6 py-5 border-b border-slate-100 bg-white sticky top-0 z-20">
-                <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 shadow-sm border border-primary-100">
-                        <i class="ph ph-cube-transparent text-2xl"></i>
+                <div class="flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600 shadow-sm border border-primary-100">
+                            <i class="ph ph-cube-transparent text-2xl"></i>
+                        </div>
+                        <div>
+                            <h1 class="text-xl font-bold text-slate-900 tracking-tight">RuruAlbernEdu</h1>
+                            <p class="text-xs font-medium text-slate-500 mt-0.5">Generator Perencanaan Kokurikuler (Isi form berurutan).</p>
+                        </div>
                     </div>
-                    <div>
-                        <h1 class="text-xl font-bold text-slate-900 tracking-tight">RuruAlbernEdu</h1>
-                        <p class="text-xs font-medium text-slate-500 mt-0.5">Generator Perencanaan Kokurikuler</p>
-                    </div>
+                    <button type="button" id="btn-fill-sample" class="flex items-center gap-1.5 text-xs font-semibold px-3 py-2 bg-primary-50 hover:bg-primary-100 active:bg-primary-200 text-primary-700 border border-primary-200 rounded-lg transition-all shadow-sm flex-shrink-0 cursor-pointer" title="Isi otomatis data contoh untuk uji coba cepat">
+                        <i class="ph-bold ph-magic-wand text-sm text-primary-600"></i>
+                        <span>Isi Sampel</span>
+                    </button>
                 </div>
 
+                <!-- API Key Configurator -->
                 <div class="mt-4 p-3 bg-slate-50 border border-slate-200 rounded-lg">
                     <div class="flex items-center justify-between mb-2">
                         <label class="text-xs font-semibold text-slate-700">Google Gemini API Key</label>
@@ -183,7 +213,7 @@
                         <input type="password" id="input-api-key" placeholder="Paste API Key di sini" class="flex-1 rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-xs focus:border-primary-500 focus:ring-1 focus:ring-primary-500 outline-none transition-all shadow-sm">
                         <button type="button" id="btn-save-api" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-900 text-white text-xs font-medium rounded-lg transition-colors">Simpan</button>
                     </div>
-                    <p class="text-[10px] text-slate-500 mt-1.5">Disimpan aman di browser (localStorage). Dapatkan key <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-primary-600 hover:underline">gratis di sini</a>.</p>
+                    <p class="text-[10px] text-slate-500 mt-1.5">Aman disimpan di browser Anda (localStorage). Dapatkan key <a href="https://aistudio.google.com/app/apikey" target="_blank" class="text-primary-600 hover:underline">gratis di sini</a>.</p>
                 </div>
             </div>
 
@@ -191,26 +221,13 @@
             <div class="flex-1 overflow-y-auto p-6 scroll-smooth">
                 <form id="main-form" class="space-y-7">
                     
+                    <!-- 1. Nama Satuan Pendidikan -->
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-slate-700">1. Nama Satuan Pendidikan <span class="text-red-500">*</span></label>
-                        <input type="text" id="input-sekolah" name="sekolah" required placeholder="Contoh: SMKN 1 Kota Tangerang Selatan" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
+                        <input type="text" id="input-sekolah" name="sekolah" required placeholder="Contoh: SD Negeri 1 Jakarta / SMP Bintang Bangsa" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-slate-700">Semester <span class="text-red-500">*</span></label>
-                            <select id="input-semester" name="semester" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
-                                <option value="" disabled selected hidden>Pilih Semester</option>
-                                <option value="Semester Ganjil">Semester Ganjil</option>
-                                <option value="Semester Genap">Semester Genap</option>
-                            </select>
-                        </div>
-                        <div class="space-y-2">
-                            <label class="block text-sm font-semibold text-slate-700">Tahun Ajaran <span class="text-red-500">*</span></label>
-                            <input type="text" id="input-tahun-ajaran" name="tahun_ajaran" required placeholder="Contoh: 2025/2026" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
-                        </div>
-                    </div>
-
+                    <!-- 2. Jenjang Pendidikan -->
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-slate-700">2. Jenjang Pendidikan <span class="text-red-500">*</span></label>
                         <select id="input-jenjang" name="jenjang" required class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
@@ -223,6 +240,7 @@
                         </select>
                     </div>
 
+                    <!-- 3. Kelas -->
                     <div class="space-y-2 progressive-group is-disabled" id="group-kelas">
                         <label class="block text-sm font-semibold text-slate-700">3. Kelas <span class="text-red-500">*</span></label>
                         <select id="input-kelas" name="kelas" required disabled class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
@@ -230,55 +248,88 @@
                         </select>
                     </div>
 
+                    <!-- 4. Tahun Ajaran & Semester -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 progressive-group is-disabled" id="group-tahun-semester">
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-slate-700">4. Tahun Ajaran <span class="text-red-500">*</span></label>
+                            <input type="text" id="input-tahun-ajaran" name="tahun_ajaran" required disabled placeholder="Contoh: 2026/2027" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
+                        </div>
+                        <div class="space-y-2">
+                            <label class="block text-sm font-semibold text-slate-700">Semester <span class="text-red-500">*</span></label>
+                            <select id="input-semester" name="semester" required disabled class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
+                                <option value="" disabled selected hidden>Pilih Semester</option>
+                                <option value="Ganjil">Ganjil</option>
+                                <option value="Genap">Genap</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- 5. Tema -->
                     <div class="space-y-3 progressive-group is-disabled p-4 border border-slate-100 rounded-xl bg-slate-50" id="group-tema">
-                        <label class="block text-sm font-semibold text-slate-700">4. Tema Kokurikuler <span class="text-red-500">*</span></label>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="wrapper-tema"></div>
+                        <label class="block text-sm font-semibold text-slate-700">5. Tema Kokurikuler <span class="text-red-500">*</span></label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" id="wrapper-tema">
+                            <!-- Options -->
+                        </div>
                     </div>
 
+                    <!-- 6. Waktu -->
                     <div class="space-y-2 progressive-group is-disabled" id="group-waktu">
-                        <label class="block text-sm font-semibold text-slate-700">5. Total Alokasi Waktu <span class="text-red-500">*</span></label>
-                        <input type="text" id="input-waktu" name="waktu" required disabled placeholder="Contoh: 30 JP atau 8 Minggu" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
+                        <label class="block text-sm font-semibold text-slate-700">6. Total Alokasi Waktu <span class="text-red-500">*</span></label>
+                        <input type="text" id="input-waktu" name="waktu" required disabled placeholder="Contoh: 30 JP atau 10 Minggu" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
                     </div>
 
+                    <!-- 7. Model Pelaksanaan -->
                     <div class="space-y-3 progressive-group is-disabled p-4 border border-slate-100 rounded-xl bg-slate-50" id="group-model">
-                        <label class="block text-sm font-semibold text-slate-700">6. Model Pelaksanaan & Jadwal <span class="text-red-500">*</span></label>
-                        <div class="space-y-2" id="wrapper-model"></div>
+                        <label class="block text-sm font-semibold text-slate-700">7. Model Pelaksanaan & Jadwal <span class="text-red-500">*</span></label>
+                        <div class="space-y-2" id="wrapper-model">
+                            <!-- Options generated by JS -->
+                        </div>
                     </div>
 
+                    <!-- 8. Lokasi -->
                     <div class="space-y-2 progressive-group is-disabled" id="group-lokasi">
-                        <label class="block text-sm font-semibold text-slate-700">7. Lokasi Kegiatan <span class="text-red-500">*</span></label>
-                        <input type="text" id="input-lokasi" name="lokasi" required disabled placeholder="Contoh: Lingkungan Sekolah & Masyarakat" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
+                        <label class="block text-sm font-semibold text-slate-700">8. Lokasi Kegiatan <span class="text-red-500">*</span></label>
+                        <input type="text" id="input-lokasi" name="lokasi" required disabled placeholder="Contoh: Aula Sekolah / Laboratorium / Lapangan" class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
                     </div>
 
+                    <!-- 9. Dimensi Profil Lulusan -->
                     <div class="space-y-3 progressive-group is-disabled p-4 border border-slate-100 rounded-xl bg-slate-50" id="group-dimensi">
                         <div class="flex justify-between items-center">
-                            <label class="block text-sm font-semibold text-slate-700">8. Dimensi Profil Lulusan <span class="text-red-500">*</span></label>
+                            <label class="block text-sm font-semibold text-slate-700">9. Dimensi Profil Lulusan <span class="text-red-500">*</span></label>
                             <span id="dimensi-counter" class="text-xs font-bold bg-primary-100 text-primary-700 px-2.5 py-1 rounded-full">Dipilih: 0/2</span>
                         </div>
-                        <div class="flex flex-wrap gap-2" id="wrapper-dimensi"></div>
+                        <div class="flex flex-wrap gap-2" id="wrapper-dimensi">
+                            <!-- Pills generated by JS -->
+                        </div>
                     </div>
 
+                    <!-- 10. Kegiatan -->
                     <div class="space-y-3 progressive-group is-disabled" id="group-kegiatan">
-                        <label class="block text-sm font-semibold text-slate-700">9. Bentuk Kegiatan Kokurikuler <span class="text-red-500">*</span></label>
-                        <div class="space-y-2" id="wrapper-kegiatan"></div>
+                        <label class="block text-sm font-semibold text-slate-700">10. Bentuk Kegiatan Kokurikuler <span class="text-red-500">*</span></label>
+                        <div class="space-y-2" id="wrapper-kegiatan">
+                           <!-- Options generated by JS -->
+                        </div>
                         <div id="wrapper-kegiatan-lainnya" class="hidden mt-2">
                             <input type="text" id="input-kegiatan-lainnya" name="kegiatan_lainnya" placeholder="Sebutkan kegiatan lainnya..." class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm">
                         </div>
                     </div>
 
+                    <!-- 11. Kebutuhan Murid -->
                     <div class="space-y-2 progressive-group is-disabled" id="group-kebutuhan">
-                        <label class="block text-sm font-semibold text-slate-700">10. Deskripsi Kebutuhan Murid <span class="text-red-500">*</span></label>
-                        <textarea id="input-kebutuhan" name="kebutuhan" rows="3" required disabled placeholder="Contoh: Murid membutuhkan stimulasi proyek kontekstual..." class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm resize-y"></textarea>
+                        <label class="block text-sm font-semibold text-slate-700">11. Deskripsi Kebutuhan Murid <span class="text-red-500">*</span></label>
+                        <textarea id="input-kebutuhan" name="kebutuhan" rows="3" required disabled placeholder="Contoh: Siswa aktif, ceria, membutuhkan stimulasi rasa ingin tahu dan eksplorasi kontekstual..." class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm resize-y"></textarea>
                     </div>
 
+                    <!-- 12. Sumberdaya -->
                     <div class="space-y-2 progressive-group is-disabled" id="group-sumberdaya">
-                        <label class="block text-sm font-semibold text-slate-700">11. Sumberdaya yang Dimiliki <span class="text-red-500">*</span></label>
-                        <textarea id="input-sumberdaya" name="sumberdaya" rows="3" required disabled placeholder="Contoh: Ruang praktik, internet, komite sekolah..." class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm resize-y"></textarea>
+                        <label class="block text-sm font-semibold text-slate-700">12. Sumberdaya yang Dimiliki <span class="text-red-500">*</span></label>
+                        <textarea id="input-sumberdaya" name="sumberdaya" rows="3" required disabled placeholder="Contoh: Fasilitas aula, koneksi internet, dukungan guru lintas mapel, komite sekolah..." class="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm focus:border-primary-500 focus:ring-2 focus:ring-primary-100 outline-none transition-all shadow-sm resize-y"></textarea>
                     </div>
 
                 </form>
             </div>
 
+            <!-- Footer Panel 1 (Action Button) -->
             <div class="p-5 border-t border-slate-200 bg-white">
                 <button type="button" id="btn-submit" class="w-full bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white font-bold py-4 px-6 rounded-xl shadow-[0_4px_14px_rgba(13,148,136,0.39)] transition-all flex flex-col items-center justify-center gap-1 group relative overflow-hidden">
                     <span class="relative z-10 flex items-center gap-2 text-lg">
@@ -286,6 +337,7 @@
                     </span>
                     <span class="relative z-10 text-xs text-primary-100 font-normal opacity-90">Termasuk jadwal, LKPD, asesmen, dan rapor</span>
                     
+                    <!-- Loading overlay -->
                     <div id="btn-loader" class="absolute inset-0 bg-primary-700 hidden items-center justify-center gap-3 z-20">
                         <i class="ph ph-circle-notch animate-spin text-2xl text-white"></i>
                         <span class="font-semibold tracking-wide">Merancang AI...</span>
@@ -297,6 +349,7 @@
         <!-- ==================== PANEL 2: AREA HASIL & EKSPOR (55%) ==================== -->
         <section class="w-full lg:w-[55%] h-full bg-slate-100/80 flex flex-col relative no-print">
             
+            <!-- Toolbar Atas -->
             <header id="output-toolbar" class="px-6 py-4 border-b border-slate-200 bg-white flex justify-between items-center shadow-sm z-10 hidden progressive-group">
                 <div class="flex items-center gap-2 text-sm font-medium text-emerald-700 bg-emerald-50 px-3 py-1.5 rounded-full border border-emerald-200">
                     <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
@@ -316,26 +369,32 @@
                 </div>
             </header>
 
+            <!-- Workspace Area -->
             <div class="flex-1 overflow-y-auto p-4 md:p-8 relative" id="workspace">
                 
+                <!-- Empty State -->
                 <div id="empty-state" class="absolute inset-4 md:inset-8 flex flex-col items-center justify-center p-8 text-center bg-white rounded-2xl border-2 border-dashed border-slate-300 shadow-sm transition-opacity duration-300">
                     <div class="w-20 h-20 bg-slate-100 rounded-2xl flex items-center justify-center mb-5 rotate-3 hover:rotate-0 transition-transform">
                         <i class="ph-duotone ph-file-dashed text-5xl text-slate-400"></i>
                     </div>
                     <h3 class="text-xl font-bold text-slate-800 mb-2">Area Tampilan Dokumen</h3>
                     <p class="text-slate-500 max-w-sm text-sm leading-relaxed">
-                        Lengkapi formulir di sebelah kiri, kemudian klik tombol <strong class="text-primary-600">"Buat Perencanaan"</strong> untuk merancang dokumen lengkap berbasis Deep Learning.
+                        Lengkapi atau sesuaikan parameter di panel sebelah kiri terlebih dahulu, kemudian klik tombol <strong class="text-primary-600">"Buat Perencanaan"</strong> untuk merancang dokumen kokurikuler lengkap berbasis Deep Learning.
                     </p>
                 </div>
 
+                <!-- Generated Document Container -->
                 <div id="output-container" class="hidden mx-auto w-full max-w-[210mm] flex-col items-center bg-white">
-                    <div id="document-content" class="w-full h-full"></div>
+                    <div id="document-content" class="w-full h-full">
+                        <!-- Content injected here -->
+                    </div>
                 </div>
             </div>
         </section>
     </main>
 
     <script>
+        // Data Structures
         const KELAS_MAP = {
             'TK': ['Kelas TK A', 'Kelas TK B'],
             'SD/MI': ['Kelas 1', 'Kelas 2', 'Kelas 3', 'Kelas 4', 'Kelas 5', 'Kelas 6'],
@@ -352,8 +411,8 @@
 
         const MODEL_OPTIONS = [
             { title: "Integrasi di jam pelajaran", desc: "Kegiatan disisipkan ke dalam jam pelajaran reguler, 1 sesi/minggu." },
-            { title: "Bloking Hari", desc: "Satu hari penuh per minggu diblok khusus untuk kokurikuler." },
-            { title: "Bloking Full", desc: "Semua hari dilaksanakan berturut-turut dalam satu periode penuh." }
+            { title: "Bloking Hari", desc: "Satu hari penuh per minggu diblok khusus untuk kokurikuler, tidak berurutan." },
+            { title: "Bloking Full", desc: "Semua hari dilaksanakan berturut-turut dalam satu periode penuh/pekan camp." }
         ];
 
         const DIMENSI_OPTIONS = [
@@ -367,9 +426,11 @@
             "Cara Lainnya"
         ];
 
+        // --- Render UI Elements dynamically ---
         function renderOptions() {
+            // Tema
             const wrTema = document.getElementById('wrapper-tema');
-            wrTema.innerHTML = TEMA_OPTIONS.map((t) => `
+            wrTema.innerHTML = TEMA_OPTIONS.map((t, i) => `
                 <label class="option-box relative cursor-pointer group">
                     <input type="radio" name="tema" value="${t}" class="peer sr-only" disabled required>
                     <div class="h-full border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors flex items-center justify-between">
@@ -379,8 +440,9 @@
                 </label>
             `).join('');
 
+            // Model
             const wrModel = document.getElementById('wrapper-model');
-            wrModel.innerHTML = MODEL_OPTIONS.map((m) => `
+            wrModel.innerHTML = MODEL_OPTIONS.map((m, i) => `
                 <label class="option-box relative cursor-pointer group block">
                     <input type="radio" name="model" value="${m.title}" class="peer sr-only" disabled required>
                     <div class="w-full border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors flex gap-3">
@@ -393,16 +455,18 @@
                 </label>
             `).join('');
 
+            // Dimensi (Pills)
             const wrDimensi = document.getElementById('wrapper-dimensi');
-            wrDimensi.innerHTML = DIMENSI_OPTIONS.map((d) => `
+            wrDimensi.innerHTML = DIMENSI_OPTIONS.map((d, i) => `
                 <label class="pill-check relative cursor-pointer">
                     <input type="checkbox" name="dimensi" value="${d}" class="peer sr-only" disabled>
                     <span class="inline-block px-3 py-1.5 border border-slate-200 rounded-full text-sm font-medium text-slate-600 hover:bg-slate-100 transition-colors bg-white shadow-sm">${d}</span>
                 </label>
             `).join('');
 
+            // Kegiatan
             const wrKeg = document.getElementById('wrapper-kegiatan');
-            wrKeg.innerHTML = KEGIATAN_OPTIONS.map((k) => `
+            wrKeg.innerHTML = KEGIATAN_OPTIONS.map((k, i) => `
                 <label class="option-box relative cursor-pointer group block">
                     <input type="radio" name="kegiatan" value="${k}" class="peer sr-only" disabled required>
                     <div class="w-full border border-slate-200 rounded-lg p-3 hover:bg-slate-50 transition-colors flex items-center justify-between">
@@ -415,9 +479,14 @@
 
         renderOptions();
 
+        
+        // Form Elements
         const elJenjang = document.getElementById('input-jenjang');
         const grpKelas = document.getElementById('group-kelas');
         const elKelas = document.getElementById('input-kelas');
+        const grpTahunSem = document.getElementById('group-tahun-semester');
+        const elTahun = document.getElementById('input-tahun-ajaran');
+        const elSemester = document.getElementById('input-semester');
         const grpTema = document.getElementById('group-tema');
         const grpWaktu = document.getElementById('group-waktu');
         const elWaktu = document.getElementById('input-waktu');
@@ -427,7 +496,9 @@
         const grpDimensi = document.getElementById('group-dimensi');
         const grpKeg = document.getElementById('group-kegiatan');
         const grpKeb = document.getElementById('group-kebutuhan');
+        const elKeb = document.getElementById('input-kebutuhan');
         const grpSum = document.getElementById('group-sumberdaya');
+        const elSum = document.getElementById('input-sumberdaya');
 
         const elApiKey = document.getElementById('input-api-key');
         const btnSaveApi = document.getElementById('btn-save-api');
@@ -458,14 +529,88 @@
             updateApiStatus();
         });
 
+        // Initialize API status on load
         updateApiStatus();
 
+        function fillSampleData() {
+            // 1. Sekolah
+            document.getElementById('input-sekolah').value = "SMK Negeri 1 Kota Tangerang Selatan";
+
+            // 2. Jenjang
+            elJenjang.value = "SMK";
+            elJenjang.dispatchEvent(new Event('change'));
+
+            // 3. Kelas
+            elKelas.value = "Kelas 11";
+            elKelas.dispatchEvent(new Event('change'));
+
+            // 4. Tahun Ajaran & Semester
+            elTahun.value = "2026/2027";
+            elSemester.value = "Ganjil";
+            enableGroup(grpTema);
+
+            // 5. Tema
+            const radioTema = document.querySelector('input[name="tema"][value="Peduli dan berbagi"]');
+            if (radioTema) {
+                radioTema.checked = true;
+                enableGroup(grpWaktu);
+            }
+
+            // 6. Waktu
+            elWaktu.value = "36 JP (12 Minggu)";
+            enableGroup(grpModel);
+
+            // 7. Model
+            const radioModel = document.querySelector('input[name="model"][value="Bloking Hari"]');
+            if (radioModel) {
+                radioModel.checked = true;
+                enableGroup(grpLokasi);
+            }
+
+            // 8. Lokasi
+            elLokasi.value = "Lingkungan Sekolah & Aula SMKN 1";
+            enableGroup(grpDimensi);
+            enableGroup(grpKeg);
+            enableGroup(grpKeb);
+            enableGroup(grpSum);
+
+            // 9. Dimensi
+            const dimValues = ["Penalaran kritis", "Kemandirian"];
+            document.querySelectorAll('input[name="dimensi"]').forEach(cb => {
+                cb.checked = dimValues.includes(cb.value);
+            });
+            const dimensiCounter = document.getElementById('dimensi-counter');
+            if (dimensiCounter) {
+                dimensiCounter.textContent = "Dipilih: 2/2";
+                dimensiCounter.className = "text-xs font-bold bg-emerald-100 text-emerald-700 px-2.5 py-1 rounded-full";
+            }
+
+            // 10. Kegiatan
+            const radioKeg = document.querySelector('input[name="kegiatan"][value="Pembelajaran Kolaboratif Lintas Disiplin Ilmu"]');
+            if (radioKeg) radioKeg.checked = true;
+
+            // 11. Kebutuhan Murid
+            elKeb.value = "Murid SMK aktif dan butuh tantangan riil berbasis projek kontekstual untuk melatih nalar kritis, empati sosial, dan pemecahan masalah.";
+
+            // 12. Sumberdaya
+            elSum.value = "Aula sekolah, koneksi internet, fasilitas lab komputer, dukungan tim guru lintas mata pelajaran, dan kemitraan dengan UMKM sekitar.";
+
+            showToast("Data sampel berhasil diisikan!", "success");
+        }
+
+        const btnFillSample = document.getElementById('btn-fill-sample');
+        if (btnFillSample) {
+            btnFillSample.addEventListener('click', fillSampleData);
+        }
+
+        // Helper to enable group
         function enableGroup(groupEl) {
             groupEl.classList.remove('is-disabled');
             const inputs = groupEl.querySelectorAll('input, select, textarea');
             inputs.forEach(i => i.disabled = false);
         }
 
+        // Helper to create Toast
         function showToast(message, type = 'error') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -476,13 +621,18 @@
             toast.innerHTML = `${icon} <span class="font-medium text-sm">${message}</span>`;
             
             container.appendChild(toast);
+            
+            // Animate in
             setTimeout(() => { toast.classList.remove('translate-y-[-20px]', 'opacity-0'); }, 10);
+            
+            // Remove after 3.5s
             setTimeout(() => {
                 toast.classList.add('opacity-0', 'scale-95');
                 setTimeout(() => toast.remove(), 300);
             }, 3500);
         }
 
+        // Event Listeners for cascading form
         elJenjang.addEventListener('change', (e) => {
             const v = e.target.value;
             elKelas.innerHTML = '<option value="" disabled selected hidden>Pilih Kelas</option>';
@@ -493,7 +643,18 @@
             elKelas.value = ""; elKelas.dispatchEvent(new Event('change'));
         });
 
-        elKelas.addEventListener('change', () => { if(elKelas.value) enableGroup(grpTema); });
+        elKelas.addEventListener('change', () => { 
+            if(elKelas.value) enableGroup(grpTahunSem); 
+        });
+
+        function checkTahunSemester() {
+            if (elTahun.value.trim().length > 0 && elSemester.value) {
+                enableGroup(grpTema);
+            }
+        }
+
+        elTahun.addEventListener('input', checkTahunSemester);
+        elSemester.addEventListener('change', checkTahunSemester);
 
         document.getElementById('wrapper-tema').addEventListener('change', (e) => {
             if(e.target.name === 'tema') enableGroup(grpWaktu);
@@ -519,7 +680,7 @@
             if(e.target.name === 'dimensi') {
                 const checkboxes = document.querySelectorAll('input[name="dimensi"]:checked');
                 if(checkboxes.length > 2) {
-                    e.target.checked = false;
+                    e.target.checked = false; // rollback
                     showToast("Maksimal pemilihan hanya 2 Dimensi Profil Lulusan.");
                 } else {
                     dimensiCounter.textContent = `Dipilih: ${checkboxes.length}/2`;
@@ -544,6 +705,7 @@
             }
         });
 
+
         const btnSubmit = document.getElementById('btn-submit');
         const btnLoader = document.getElementById('btn-loader');
         const mainForm = document.getElementById('main-form');
@@ -554,85 +716,139 @@
 
         async function callGeminiAPI(data) {
             const userApiKey = localStorage.getItem('gemini_api_key');
-            if(!userApiKey) {
-                throw new Error("API Key belum diset. Masukkan Google Gemini API Key di panel kiri atas.");
-            }
+            
+            const prompt = `
+                Anda adalah Ahli Kurikulum Pendidikan Nasional. Buatkan konten "Perencanaan Kokurikuler" berstruktur Deep Learning.
+                Data masukannya:
+                - Sekolah: ${data.sekolah}
+                - Jenjang/Kelas: ${data.jenjang} / ${data.kelas}
+                - Tahun Ajaran / Semester: ${data.tahun_ajaran} / ${data.semester}
+                - Tema: ${data.tema}
+                - Waktu: ${data.waktu}
+                - Lokasi: ${data.lokasi}
+                - Dimensi Profil: ${data.dimensi.join(', ')}
+                - Kebutuhan Murid: ${data.kebutuhan}
+                - Sumberdaya: ${data.sumberdaya}
 
-            const prompt = `Anda adalah Ahli Kurikulum Pendidikan Nasional. Buatkan konten "Perencanaan Kokurikuler" berstruktur Deep Learning lengkap. 
-            Data Masukan:
-            - Sekolah: ${data.sekolah}
-            - Semester: ${data.semester} (${data.tahun_ajaran})
-            - Jenjang/Kelas: ${data.jenjang} / ${data.kelas}
-            - Tema: ${data.tema}
-            - Waktu: ${data.waktu}
-            - Model: ${data.model}
-            - Lokasi: ${data.lokasi}
-            - Dimensi Profil: ${data.dimensi.join(', ')}
-            - Kegiatan: ${data.kegiatan}
-            - Kebutuhan Murid: ${data.kebutuhan}
-            - Sumberdaya: ${data.sumberdaya}
-
-            BERIKAN OUTPUT HANYA DALAM FORMAT JSON VALID TANPA MARKDOWN BACKTICKS ATAU TEKS LAINNYA, dengan struktur JSON berikut:
-            {
-              "dimensi": [{"nama": "...", "deskripsi": "..."}],
-              "tujuan": ["...", "..."],
-              "praktik": [{"tahap": "MEMAHAMI", "deskripsi": "..."}, {"tahap": "MENGAPLIKASI", "deskripsi": "..."}, {"tahap": "MEREFLEKSI", "deskripsi": "..."}],
-              "lingkungan": {"penataan": "...", "norma": "..."},
-              "kemitraan": [{"pihak": "...", "peran": "..."}],
-              "digital": [{"platform": "...", "fungsi": "..."}],
-              "kegiatan": [{"tahap": "Minggu 1-2", "sesi": "2 JP", "aktivitas": "...", "output": "..."}],
-              "asesmen": {
-                "formatif": "...",
-                "sumatif": "...",
-                "rubrik": [
-                  {"kriteria": "Kemandirian", "skor1": "...", "skor2": "...", "skor3": "...", "skor4": "..."},
-                  {"kriteria": "Kolaborasi", "skor1": "...", "skor2": "...", "skor3": "...", "skor4": "..."}
-                ]
-              },
-              "lkpd": {
-                "pertanyaan_pemantik": ["...", "..."]
-              }
-            }`;
-
-            const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${userApiKey}`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: prompt }] }],
-                    generationConfig: {
-                        response_mime_type: "application/json"
-                    }
-                })
-            });
-
-            if(!response.ok) {
-                const errData = await response.json().catch(() => ({}));
-                throw new Error(errData.error?.message || "Gagal terhubung ke Gemini API.");
-            }
-
-            const jsonRes = await response.json();
-            const textResponse = jsonRes.candidates?.[0]?.content?.parts?.[0]?.text;
-            if(!textResponse) throw new Error("Format respons API tidak valid.");
-
-            // Sanitasi output JSON jika Gemini mengembalikan markdown backticks atau teks tambahan
-            let cleanJson = textResponse.trim();
-            if (cleanJson.startsWith("```")) {
-                cleanJson = cleanJson.replace(/^```(?:json)?\s*/i, '').replace(/\s*```$/, '').trim();
-            }
+                Anda WAJIB memberikan respons HANYA dalam format JSON dengan struktur yang lengkap sesuai panduan berikut:
+                {
+                  "dimensi": [ { "nama": "...", "deskripsi": "..." } ],
+                  "tujuan": [ "...", "..." ],
+                  "praktik": [
+                    { "tahap": "MEMAHAMI", "deskripsi": "..." },
+                    { "tahap": "MENGAPLIKASI", "deskripsi": "..." },
+                    { "tahap": "MEREFLEKSI", "deskripsi": "..." }
+                  ],
+                  "lingkungan": { "penataan": "...", "norma": "..." },
+                  "kemitraan": [ { "pihak": "...", "peran": "..." } ],
+                  "digital": [ { "platform": "...", "fungsi": "..." } ],
+                  "kegiatan": [
+                    { "tahap": "Persiapan", "sesi": "...", "aktivitas": "...", "output": "..." },
+                    { "tahap": "Pelaksanaan: Memahami", "sesi": "...", "aktivitas": "...", "output": "..." },
+                    { "tahap": "Pelaksanaan: Mengaplikasi", "sesi": "...", "aktivitas": "...", "output": "..." },
+                    { "tahap": "Pelaksanaan: Merefleksi", "sesi": "...", "aktivitas": "...", "output": "..." },
+                    { "tahap": "Evaluasi", "sesi": "...", "aktivitas": "...", "output": "..." }
+                  ],
+                  "asesmen": {
+                    "formatif": "...",
+                    "sumatif": "...",
+                    "rubrik": [ 
+                        { "kriteria": "...", "skor1": "...", "skor2": "...", "skor3": "...", "skor4": "..." }
+                    ]
+                  },
+                  "lkpd": {
+                    "pertanyaan_pemantik": [ "...", "..." ]
+                  }
+                }
+            `;
 
             try {
-                return JSON.parse(cleanJson);
-            } catch (e) {
-                // Ekstraksi bagian JSON menggunakan Regex jika parsing biasa gagal
-                const match = cleanJson.match(/\{[\s\S]*\}/);
-                if (match) {
-                    return JSON.parse(match[0]);
+                const apiKey = userApiKey ? userApiKey.trim() : ""; 
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+                
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: prompt }] }],
+                        generationConfig: { response_mime_type: "application/json" },
+                        systemInstruction: { parts: [{ text: "Gunakan bahasa Indonesia baku. Output HANYA JSON tanpa format lain." }] }
+                    })
+                });
+
+                if(!response.ok) {
+                    const errObj = await response.json().catch(() => ({}));
+                    throw new Error(errObj.error?.message || `HTTP Error ${response.status}`);
                 }
-                throw new Error("Gagal mengurai respons JSON dari AI. Silakan coba klik tombol Buat Perencanaan kembali.");
+                const res = await response.json();
+                let text = res.candidates[0].content.parts[0].text;
+                text = text.replace(/```json/gi, '').replace(/```/g, '').trim();
+                return JSON.parse(text);
+            } catch (err) {
+                console.warn("API Call Failed or using fallback:", err);
+                if (userApiKey) throw new Error("Gagal menghubungi AI. Pastikan API Key valid.");
+                return generateSimulationData(data);
             }
         }
 
+        function generateSimulationData(d) {
+            return {
+                dimensi: d.dimensi.map((dim, i) => ({
+                    nama: dim,
+                    deskripsi: i === 0 
+                        ? `Dirancang agar siswa mampu memaknai setiap aktivitas di ${d.lokasi} sebagai proses pembentukan karakter positif dan pengenalan jati diri pada Semester ${d.semester} Tahun Ajaran ${d.tahun_ajaran}, disesuaikan dengan kebutuhan: ${d.kebutuhan}.` 
+                        : `Mengajak siswa memecahkan masalah kontekstual dengan ${d.sumberdaya}, menumbuhkan semangat kolaborasi lintas disiplin ilmu.`
+                })),
+                tujuan: [
+                    `Peserta didik mampu mengidentifikasi dan menganalisis isu sosial atau lingkungan di sekitar sekolah melalui riset sederhana.`,
+                    `Peserta didik mampu merancang dan mengeksekusi aksi nyata dengan memanfaatkan ${d.lokasi} secara mandiri.`,
+                    `Peserta didik mampu mengevaluasi efektivitas aksi dan merefleksikan nilai-nilai kolaborasi tim.`
+                ],
+                praktik: [
+                    { tahap: "MEMAHAMI", deskripsi: `Murid melakukan eksplorasi mendalam mengenai tema "${d.tema}" melalui studi kasus nyata di sekitar ${d.lokasi}.` },
+                    { tahap: "MENGAPLIKASI", deskripsi: `Murid menerapkan rencana aksi berdasarkan sumber daya (${d.sumberdaya}) untuk menciptakan solusi nyata yang dapat didistribusikan.` },
+                    { tahap: "MEREFLEKSI", deskripsi: "Murid melakukan evaluasi terhadap proses kerja mereka, kemandirian menghadapi kendala, dianalisis melalui diskusi kelompok." }
+                ],
+                lingkungan: {
+                    penataan: `Area ${d.lokasi} dikondisikan sebagai Creative Hub untuk melahirkan gagasan dan koordinasi lintas tim.`,
+                    norma: "Membangun budaya 'Gagal untuk Belajar', saling menghargai pendapat (inklusivitas), dan disiplin terhadap linimasa."
+                },
+                kemitraan: [
+                    { pihak: "Pakar / Praktisi Lokal", peran: "Memberikan wawasan industri dan standar proyek yang berkelanjutan." },
+                    { pihak: "Guru Lintas Mapel", peran: "Kolaborasi mentor teknis dan manajerial dari berbagai disiplin ilmu." }
+                ],
+                digital: [
+                    { platform: "Google Workspace / Trello", fungsi: "Manajemen tugas dan pembagian jadwal anggota kelompok." },
+                    { platform: "Canva / Media Sosial", fungsi: "Kampanye isu dan dokumentasi langkah kerja nyata." }
+                ],
+                kegiatan: [
+                    { tahap: "Persiapan", sesi: "4 JP", aktivitas: "Orientasi tema, pembentukan kelompok kolaboratif, dan identifikasi masalah.", output: "Proposal Aksi Singkat" },
+                    { tahap: "Pelaksanaan: Memahami", sesi: "6 JP", aktivitas: "Riset lapangan di sekitar sekolah, wawancara sederhana dan observasi.", output: "Mind Map Masalah" },
+                    { tahap: "Pelaksanaan: Mengaplikasi", sesi: "10 JP", aktivitas: "Eksekusi aksi nyata di lapangan sekolah (Pembuatan produk/layanan).", output: "Produk / Layanan Nyata" },
+                    { tahap: "Pelaksanaan: Merefleksi", sesi: "4 JP", aktivitas: "Presentasi hasil, diskusi panel, dan pengisian jurnal refleksi.", output: "Jurnal Refleksi Diri" },
+                    { tahap: "Evaluasi", sesi: "4 JP", aktivitas: "Asesmen sumatif, umpan balik dari mentor, dan perayaan belajar.", output: "Laporan Akhir Projek" }
+                ],
+                asesmen: {
+                    formatif: "Dilakukan melalui observasi saat diskusi dan jurnal harian untuk melihat perkembangan mengelola tugas.",
+                    sumatif: "Penilaian presentasi dan kebermanfaatan projek bagi lingkungan dan masyarakat sasaran.",
+                    rubrik: [
+                        { kriteria: "Bernalar Kritis", skor1: "Membutuhkan bantuan penuh untuk masalah.", skor2: "Mampu identifikasi tapi belum dalam.", skor3: "Mampu analisis dan beri solusi logis.", skor4: "Analisis kritis berbasis data dan inovatif." },
+                        { kriteria: "Kemandirian", skor1: "Melaksanakan tugas hanya jika diinstruksikan.", skor2: "Merencanakan tapi sering meleset.", skor3: "Mengelola tugas mandiri dari awal.", skor4: "Inisiatif tinggi dan mengatur strategi efektif." }
+                    ]
+                },
+                lkpd: {
+                    pertanyaan_pemantik: [
+                        `Apa masalah utama yang kamu temukan di ${d.lokasi}?`,
+                        `Bagaimana sumber daya (${d.sumberdaya}) dapat dimanfaatkan untuk menyelesaikan masalah tersebut?`
+                    ]
+                }
+            };
+        }
+
+        // Fungsi Render HTML Estetik (Format Bersambung tanpa potong)
         function renderBeautifulHTML(formData, aiData) {
+            
+            // 1. Bagian A: Group Header + First Item (Mencegah judul terpisah dari konten)
             let dimHtml = '';
             if (aiData.dimensi && aiData.dimensi.length > 0) {
                 dimHtml += `
@@ -652,6 +868,7 @@
                 }
             }
 
+            // 2. Bagian B: Group Header + First Item
             let tujuHtml = '';
             if (aiData.tujuan && aiData.tujuan.length > 0) {
                 tujuHtml += `
@@ -671,11 +888,12 @@
                 }
             }
 
+            // 3. Bagian C: Group Header + First Item
             let praktikHtml = '';
             if (aiData.praktik && aiData.praktik.length > 0) {
                 praktikHtml += `
                 <div class="avoid-break">
-                    <h3 class="section-header"><i class="ph-duotone ph-brain"></i> C. PRAKTIK PEDAGOGIS (DEEP LEARNING)</h3>
+                    <h3 class="section-header"><i class="ph-duotone ph-brain"></i> C. PRAKTIK PEDAGOGIS (METODE DEEP LEARNING)</h3>
                     <div class="card-box">
                         <div class="number-badge" style="background-color: #008080;">1</div>
                         <div class="card-text"><strong>${aiData.praktik[0].tahap}:</strong> ${aiData.praktik[0].deskripsi}</div>
@@ -692,6 +910,7 @@
 
             let mitraHtml = (aiData.kemitraan || []).map(m => `<li class="mb-2"><strong>${m.pihak}:</strong> ${m.peran}</li>`).join('');
             let digitalHtml = (aiData.digital || []).map(d => `<li class="mb-2"><strong>${d.platform}:</strong> ${d.fungsi}</li>`).join('');
+
             let tabelKegiatanHtml = (aiData.kegiatan || []).map(keg => `
                 <tr class="avoid-break">
                     <td><strong>${keg.tahap}</strong></td>
@@ -713,6 +932,8 @@
 
             return `
             <div class="document-paper text-sm">
+                
+                <!-- Header Banner -->
                 <div class="header-banner avoid-break">
                     <h1 class="text-3xl font-bold uppercase mb-1">Perencanaan Kokurikuler</h1>
                     <div class="flex items-center gap-2 text-teal-100 opacity-90">
@@ -720,17 +941,23 @@
                         <h2 class="text-lg font-semibold uppercase">${formData.sekolah}</h2>
                     </div>
                     <div class="mt-3 flex flex-wrap gap-4 text-sm font-medium opacity-95">
-                        <span class="flex items-center gap-1.5"><i class="ph-fill ph-calendar"></i> ${formData.semester} (${formData.tahun_ajaran})</span>
                         <span class="flex items-center gap-1.5"><i class="ph-fill ph-graduation-cap"></i> ${formData.jenjang} (${formData.kelas})</span>
+                        <span class="flex items-center gap-1.5"><i class="ph-fill ph-calendar"></i> TA ${formData.tahun_ajaran} - Sem. ${formData.semester}</span>
                         <span class="flex items-center gap-1.5"><i class="ph-fill ph-clock"></i> ${formData.waktu}</span>
                     </div>
                 </div>
 
                 <div class="document-inner">
+                    <!-- Bagian A -->
                     ${dimHtml}
+                    
+                    <!-- Bagian B -->
                     ${tujuHtml}
+                    
+                    <!-- Bagian C -->
                     ${praktikHtml}
 
+                    <!-- Bagian D -->
                     <div class="avoid-break">
                         <h3 class="section-header"><i class="ph-duotone ph-house"></i> D. LINGKUNGAN PEMBELAJARAN</h3>
                         <div class="pl-4 border-l-2 border-slate-300 ml-2 mb-4">
@@ -739,6 +966,7 @@
                         </div>
                     </div>
 
+                    <!-- Bagian E & F -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 avoid-break">
                         <div>
                             <h3 class="section-header !mt-2"><i class="ph-duotone ph-users-three"></i> E. KEMITRAAN</h3>
@@ -750,6 +978,8 @@
                         </div>
                     </div>
 
+                    <!-- Bagian G (Tabel) -->
+                    <!-- Judul disematkan ke dalam tag thead tabel agar selamanya menempel dengan tabel -->
                     <table class="styled-table w-full">
                         <thead>
                             <tr class="avoid-break !bg-white">
@@ -767,6 +997,7 @@
                         <tbody>${tabelKegiatanHtml}</tbody>
                     </table>
 
+                    <!-- Bagian H (Asesmen) -->
                     <div class="avoid-break text-slate-700 mb-4">
                         <h3 class="section-header"><i class="ph-duotone ph-exam"></i> H. ASESMEN</h3>
                         <p class="mb-2"><strong>1. Asesmen Formatif (Proses):</strong> ${aiData.asesmen?.formatif || '-'}</p>
@@ -782,28 +1013,128 @@
                             </tr>
                             <tr class="avoid-break">
                                 <th width="16%">Kriteria</th>
-                                <th width="21%">Skor 1</th>
-                                <th width="21%">Skor 2</th>
-                                <th width="21%">Skor 3</th>
-                                <th width="21%">Skor 4</th>
+                                <th width="21%">Skor 1 (Mulai Berkembang)</th>
+                                <th width="21%">Skor 2 (Sedang Berkembang)</th>
+                                <th width="21%">Skor 3 (Sesuai Harapan)</th>
+                                <th width="21%">Skor 4 (Sangat Berkembang)</th>
                             </tr>
                         </thead>
                         <tbody>${rubrikHtml}</tbody>
                     </table>
 
+                    <!-- LAMPIRAN LKPD -->
                     <div class="page-break-before pt-6 avoid-break">
                         <h2 class="text-xl font-bold text-[#0F4C81] mb-6 text-center underline underline-offset-4">LAMPIRAN 1. LEMBAR KERJA PESERTA DIDIK (LKPD)</h2>
+                        
                         <div class="mb-6 grid grid-cols-2 gap-y-3 text-sm font-semibold bg-slate-50 p-4 border border-slate-300 rounded-lg">
+                            <div class="col-span-2 md:col-span-1">Tahun Ajaran / Sem : <span class="font-normal text-slate-800">${formData.tahun_ajaran} / ${formData.semester}</span></div>
+                            <div class="col-span-2 md:col-span-1">Kelas : <span class="font-normal text-slate-800">${formData.kelas}</span></div>
                             <div class="col-span-2 md:col-span-1">Nama Kelompok : <span class="inline-block w-48 border-b-2 border-dotted border-slate-400"></span></div>
                             <div class="col-span-2 md:col-span-1">Topik Aksi : <span class="inline-block w-48 border-b-2 border-dotted border-slate-400"></span></div>
+                            <div class="col-span-2 mt-2">
+                                Anggota : 
+                                1. <span class="inline-block w-32 border-b-2 border-dotted border-slate-400 mr-2"></span>
+                                2. <span class="inline-block w-32 border-b-2 border-dotted border-slate-400 mr-2"></span>
+                                3. <span class="inline-block w-32 border-b-2 border-dotted border-slate-400 mr-2"></span>
+                                4. <span class="inline-block w-32 border-b-2 border-dotted border-slate-400"></span>
+                            </div>
                         </div>
+                        
                         <div class="mb-5">
                             <h4 class="font-bold text-[#0F4C81] mb-2 text-base">1. Pertanyaan Pemantik:</h4>
-                            <ul class="list-decimal pl-5 text-sm text-slate-700 font-medium space-y-1">${pemantikHtml}</ul>
+                            <ul class="list-decimal pl-5 text-sm text-slate-700 font-medium space-y-1">
+                                ${pemantikHtml}
+                            </ul>
                         </div>
                     </div>
+
+                    <!-- Pembungkus tabel lkpd besar dibebaskan dari avoid-break mencegah ruang kosong -->
+                    <div class="mb-5">
+                        <table class="styled-table w-full">
+                            <thead>
+                                <tr class="avoid-break !bg-white">
+                                    <td colspan="2" class="!border-none !p-0 !pb-2 !bg-white">
+                                        <h4 class="font-bold text-[#0F4C81] m-0 text-base">2. Identifikasi Masalah:</h4>
+                                    </td>
+                                </tr>
+                                <tr class="avoid-break">
+                                    <th width="40%">Masalah / Isu yang Ditemukan</th>
+                                    <th>Bukti / Fakta Lapangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="avoid-break"><td class="h-16"></td><td></td></tr>
+                                <tr class="avoid-break"><td class="h-16"></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mb-5">
+                        <table class="styled-table w-full">
+                            <thead>
+                                <tr class="avoid-break !bg-white">
+                                    <td colspan="3" class="!border-none !p-0 !pb-2 !bg-white">
+                                        <h4 class="font-bold text-[#0F4C81] m-0 text-base">3. Rencana Aksi (Solusi):</h4>
+                                    </td>
+                                </tr>
+                                <tr class="avoid-break">
+                                    <th width="30%">Nama Aksi / Ide Solusi</th>
+                                    <th width="35%">Tujuan yang Ingin Dicapai</th>
+                                    <th>Sasaran / Penerima Manfaat</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="avoid-break"><td class="h-20"></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mb-5">
+                        <table class="styled-table w-full">
+                            <thead>
+                                <tr class="avoid-break !bg-white">
+                                    <td colspan="3" class="!border-none !p-0 !pb-2 !bg-white">
+                                        <h4 class="font-bold text-[#0F4C81] m-0 text-base">4. Kebutuhan Sumber Daya:</h4>
+                                    </td>
+                                </tr>
+                                <tr class="avoid-break">
+                                    <th width="40%">Alat & Bahan yang Dibutuhkan</th>
+                                    <th width="20%">Jumlah</th>
+                                    <th>Penanggung Jawab (PIC)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="avoid-break"><td class="h-10"></td><td></td><td></td></tr>
+                                <tr class="avoid-break"><td class="h-10"></td><td></td><td></td></tr>
+                                <tr class="avoid-break"><td class="h-10"></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mb-5">
+                        <table class="styled-table w-full">
+                            <thead>
+                                <tr class="avoid-break !bg-white">
+                                    <td colspan="3" class="!border-none !p-0 !pb-2 !bg-white">
+                                        <h4 class="font-bold text-[#0F4C81] m-0 text-base">5. Jurnal Pelaksanaan & Refleksi:</h4>
+                                    </td>
+                                </tr>
+                                <tr class="avoid-break">
+                                    <th width="15%">Tanggal</th>
+                                    <th width="35%">Aktivitas yang Dilakukan</th>
+                                    <th>Kendala & Solusi yang Ditemukan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="avoid-break"><td class="h-16"></td><td></td><td></td></tr>
+                                <tr class="avoid-break"><td class="h-16"></td><td></td><td></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
-            </div>`;
+            </div>
+            `;
         }
 
         btnSubmit.addEventListener('click', async () => {
@@ -821,10 +1152,10 @@
             const formData = new FormData(mainForm);
             const data = {
                 sekolah: formData.get('sekolah'),
-                semester: formData.get('semester'),
-                tahun_ajaran: formData.get('tahun_ajaran'),
                 jenjang: formData.get('jenjang'),
                 kelas: formData.get('kelas'),
+                tahun_ajaran: formData.get('tahun_ajaran'),
+                semester: formData.get('semester'),
                 tema: formData.get('tema'),
                 waktu: formData.get('waktu'),
                 model: formData.get('model'),
@@ -838,55 +1169,106 @@
             btnSubmit.disabled = true;
             btnLoader.classList.remove('hidden');
             btnLoader.classList.add('flex');
-
+            
             try {
                 const aiData = await callGeminiAPI(data);
-                const htmlResult = renderBeautifulHTML(data, aiData);
+                documentContent.innerHTML = renderBeautifulHTML(data, aiData);
+                
+                emptyState.classList.add('opacity-0');
+                setTimeout(() => {
+                    emptyState.classList.add('hidden');
+                    outputContainer.classList.remove('hidden');
+                    outputToolbar.classList.remove('hidden');
+                    if(window.innerWidth < 1024) document.querySelector('.lg\\:w-\\[55\\%\\]').scrollIntoView({behavior: 'smooth'});
+                }, 300);
 
-                documentContent.innerHTML = htmlResult;
-                emptyState.classList.add('opacity-0', 'pointer-events-none');
-                outputContainer.classList.remove('hidden');
-                outputContainer.classList.add('flex');
-                outputToolbar.classList.remove('hidden');
-
-                showToast("Perencanaan berhasil dibuat!", "success");
-            } catch (err) {
-                console.error(err);
-                showToast(err.message || "Terjadi kesalahan saat membuat perencanaan.");
+            } catch (error) {
+                console.error(error);
+                showToast(error.message || "Gagal menghasilkan dokumen. Terjadi kesalahan sistem.");
             } finally {
                 btnSubmit.disabled = false;
-                btnLoader.classList.remove('flex');
                 btnLoader.classList.add('hidden');
+                btnLoader.classList.remove('flex');
             }
         });
 
-        document.getElementById('btn-copy').addEventListener('click', () => {
-            const range = document.createRange();
-            range.selectNode(document.getElementById('output-container'));
-            window.getSelection().removeAllRanges();
-            window.getSelection().addRange(range);
-            document.execCommand('copy');
-            window.getSelection().removeAllRanges();
-            showToast("Dokumen disalin ke clipboard!", "success");
+
+        // 1. Copy Text
+        document.getElementById('btn-copy').addEventListener('click', async () => {
+            try {
+                const text = documentContent.innerText;
+                await navigator.clipboard.writeText(text);
+                showToast("Dokumen berhasil disalin ke clipboard!", "success");
+            } catch (err) {
+                const textarea = document.createElement('textarea');
+                textarea.value = documentContent.innerText;
+                document.body.appendChild(textarea);
+                textarea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textarea);
+                showToast("Dokumen berhasil disalin!", "success");
+            }
         });
 
-        document.getElementById('btn-pdf').addEventListener('click', () => {
-            window.print();
-        });
-
+        // 2. Download Word 
         document.getElementById('btn-word').addEventListener('click', () => {
-            const htmlContent = document.getElementById('document-content').innerHTML;
-            const blob = new Blob(['<!DOCTYPE html><html><head><meta charset="utf-8"></head><body>' + htmlContent + '</body></html>'], { type: 'application/msword' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Perencanaan_Kokurikuler.doc';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
+            const header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Perencanaan Kokurikuler</title></head><body>";
+            const footer = "</body></html>";
+            
+            const cleanHtml = documentContent.innerHTML.replace(/class="[^"]*"/g, '');
+            const sourceHTML = header + cleanHtml + footer;
+            
+            const source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+            const fileDownload = document.createElement("a");
+            
+            document.body.appendChild(fileDownload);
+            fileDownload.href = source;
+            fileDownload.download = `Perencanaan_Kokurikuler_${elKelas.value.replace(/\s+/g, '_')}.doc`;
+            fileDownload.click();
+            document.body.removeChild(fileDownload);
+            
             showToast("File Word berhasil diunduh!", "success");
         });
+
+        // 3. Print PDF (Telah Diperbaiki: letterRendering Dihapus)
+        document.getElementById('btn-pdf').addEventListener('click', () => {
+            const btn = document.getElementById('btn-pdf');
+            const originalHTML = btn.innerHTML;
+            
+            btn.innerHTML = '<i class="ph ph-spinner animate-spin"></i> Memproses PDF...';
+            btn.disabled = true;
+            btn.classList.add('opacity-75', 'cursor-not-allowed');
+
+            const element = document.getElementById('document-content');
+            
+            // Konfigurasi Baru untuk Mengatasi Spasi Huruf dan Pemotongan Halaman
+            const opt = {
+                margin:       [10, 0, 15, 0], // Margin atas (10) dan bawah (15) ditambahkan
+                filename:     `Perencanaan_Kokurikuler_${document.getElementById('input-kelas').value || 'Doc'}.pdf`,
+                image:        { type: 'jpeg', quality: 0.98 },
+                html2canvas:  { 
+                    scale: 2, 
+                    useCORS: true,
+                    scrollY: 0 // FIX: Mencegah blank space besar di atas kertas akibat posisi scroll user
+                }, 
+                jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+                pagebreak:    { mode: ['css', 'legacy'], avoid: ['.avoid-break'] }
+            };
+
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                showToast("File PDF berhasil dibuat dan diunduh!", "success");
+            }).catch(err => {
+                console.error(err);
+                btn.innerHTML = originalHTML;
+                btn.disabled = false;
+                btn.classList.remove('opacity-75', 'cursor-not-allowed');
+                showToast("Gagal membuat PDF. Coba gunakan fitur Salin/Word.", "error");
+            });
+        });
+
     </script>
 </body>
 </html>
